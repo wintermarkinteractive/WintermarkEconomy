@@ -1,0 +1,30 @@
+name: WintermarkEconomy
+version: '${version}'
+main: io.github.wintermarkinteractive.economy.EconomyPlugin
+description: Standalone economy with SQLite storage, /pay, /baltop, admin tools and a Java API.
+author: Wintermark Interactive
+website: https://github.com/wintermarkinteractive
+api-version: '26.3'
+softdepend: [Vault]
+permissions:
+  wintermark.eco.use:
+    description: See your balance and pay other players.
+    default: true
+  wintermark.eco.baltop:
+    description: Use /baltop.
+    default: true
+  wintermark.eco.others:
+    description: See other players' balances with /balance <player>.
+    default: true
+  wintermark.eco.withdraw:
+    description: Make banknotes with /withdraw.
+    default: true
+  wintermark.eco.paytoggle:
+    description: Block or allow payments with /paytoggle.
+    default: true
+  wintermark.eco.bypass.cooldown:
+    description: No waiting time between payments.
+    default: op
+  wintermark.eco.admin:
+    description: /eco give, take, set, reset, history and reload. Can pay players who use /paytoggle.
+    default: op

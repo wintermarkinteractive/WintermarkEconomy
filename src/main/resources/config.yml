@@ -1,0 +1,128 @@
+# ============================================================
+#  Wintermark Economy - config.yml
+#  Amounts accept abbreviations: 500, 2.5k, 1m, 3b, 1t
+#  Texts use MiniMessage: https://docs.advntr.dev/minimessage/format.html
+# ============================================================
+
+currency:
+  singular: "Dollar"
+  plural: "Dollars"
+  symbol: "$"
+  # Tokens: {symbol} {amount} {name}. Examples: "{symbol}{amount}" -> $1,250   "{amount} {name}" -> 1,250 Dollars
+  format: "{symbol}{amount}"
+  # 0 = whole numbers only, 2 = cents. Changing this needs a full restart (balances are converted).
+  decimals: 2
+  # Show $100 instead of $100.00 when there are no cents.
+  hide-zero-decimals: true
+  thousands-separator: ","
+  decimal-separator: "."
+  # Short display used in /baltop: $1.2k, $3.4M ...
+  compact-suffixes: ["k", "M", "B", "T", "Q"]
+
+# Money every new player starts with.
+starting-balance: "100"
+# Nobody can have more than this.
+max-balance: "100t"
+
+pay:
+  # Smallest amount for /pay.
+  min-amount: "1"
+  # Allow paying players who are offline (they need to have joined before).
+  allow-offline: true
+  # Payments of this amount or more need a click on [CONFIRM]. "0" = never ask.
+  confirm-above: "10k"
+  # How long the [CONFIRM] button stays valid (seconds).
+  confirm-seconds: 30
+  # Seconds between two payments by the same player (0 = off). Bypass: wintermark.eco.bypass.cooldown
+  cooldown-seconds: 3
+
+banknotes:
+  enabled: true
+  min-amount: "10"
+  # "0" = no maximum.
+  max-amount: "0"
+  material: PAPER
+  glow: true
+  date-format: "yyyy-MM-dd"
+  # Placeholders: <amount> <amount_compact> <signer> <date> <id>
+  name: "<gold><bold>Banknote</bold> <yellow><amount>"
+  lore:
+    - "<gray>Value: <gold><amount>"
+    - "<gray>Signed by <white><signer>"
+    - "<dark_gray><date> - #<id>"
+    - ""
+    - "<yellow>Right-click to deposit"
+    - "<yellow>Sneak + right-click: deposit all notes"
+
+history:
+  # Delete history entries (and used banknote records) older than this. 0 = keep forever.
+  keep-days: 90
+  # Java date pattern for history lines.
+  time-format: "MM-dd HH:mm"
+  page-size: 8
+
+vault:
+  # Register as Vault's economy when Vault or VaultUnlocked is installed (needs a restart to change).
+  enabled: true
+
+baltop:
+  # How often the /baltop list is rebuilt (seconds, minimum 10).
+  refresh-seconds: 300
+
+messages:
+  prefix: "<dark_gray>[<gold>Economy</gold>]</dark_gray> "
+  balance: "<prefix><gray>Balance: <gold><amount></gold>"
+  balance-other: "<prefix><gray><yellow><player></yellow>'s balance: <gold><amount></gold>"
+  usage-balance: '<prefix><gray>Usage: <white>/balance \<player></white>'
+  usage-pay: '<prefix><gray>Usage: <white>/pay \<player> \<amount></white> <dark_gray>(e.g. 250, 1.5k, 2m)</dark_gray>'
+  pay-sent: "<prefix><gray>You sent <gold><amount></gold> to <yellow><player></yellow>. <dark_gray>(balance <balance>)</dark_gray>"
+  pay-received: "<prefix><gray>You received <gold><amount></gold> from <yellow><player></yellow>."
+  pay-self: "<prefix><red>You can't pay yourself."
+  pay-min: "<prefix><red>The minimum payment is <min>."
+  pay-offline-disabled: "<prefix><red><player> must be online to receive money."
+  insufficient-funds: "<prefix><red>You don't have enough money. <gray>Balance: <gold><balance></gold>"
+  invalid-amount: "<prefix><red>'<input>' is not a valid amount. <gray>Examples: 250, 1.5k, 2m"
+  player-not-found: "<prefix><red>Player '<player>' was not found."
+  max-balance: "<prefix><red>That would put <player> over the maximum balance of <max>."
+  no-permission: "<prefix><red>You don't have permission to do that."
+  players-only: "<prefix><red>Only players can use this command."
+  baltop-header: "<gold><bold>Top balances</bold></gold> <gray>page <page>/<pages> <dark_gray>|</dark_gray> server total <gold><total_compact></gold>"
+  baltop-line: "<gray>#<rank> <white><player></white> <dark_gray>-</dark_gray> <gold><amount_compact></gold>"
+  baltop-self: "<gray>Your rank: <yellow>#<rank></yellow> <dark_gray>-</dark_gray> <gold><amount_compact></gold>"
+  baltop-next: "<dark_gray>Next page: <next_click><yellow><u>/baltop <next></u></yellow></next_click>"
+  baltop-empty: "<prefix><gray>No accounts yet."
+  eco-give: "<prefix><gray>Gave <gold><amount></gold> to <yellow><player></yellow>. New balance: <gold><balance></gold>"
+  eco-give-all: "<prefix><gray>Gave <gold><amount></gold> to <yellow><count></yellow> online players."
+  eco-all-give-only: "<prefix><red>* (everyone online) only works with /eco give."
+  eco-take: "<prefix><gray>Took <gold><amount></gold> from <yellow><player></yellow>. New balance: <gold><balance></gold>"
+  eco-take-insufficient: "<prefix><red><player> only has <balance>."
+  eco-set: "<prefix><gray>Set <yellow><player></yellow>'s balance to <gold><balance></gold>."
+  eco-reset: "<prefix><gray>Reset <yellow><player></yellow> to the starting balance (<gold><balance></gold>)."
+  # Sent to the player whose money changed (leave empty "" to turn off).
+  eco-target-give: "<prefix><gray>You received <gold><amount></gold>."
+  eco-target-take: "<prefix><gray><gold><amount></gold> was taken from your account."
+  eco-target-set: "<prefix><gray>Your balance was set to <gold><balance></gold>."
+  eco-help: '<gold><bold>Wintermark Economy</bold></gold><newline><gray>/eco give \<player|*> \<amount><newline>/eco take \<player> \<amount><newline>/eco set \<player> \<amount><newline>/eco reset \<player><newline>/eco history \<player> [page]<newline>/eco reload'
+  pay-confirm: "<prefix><gray>Send <gold><amount></gold> to <yellow><player></yellow>? <confirm_click><green><bold>[CONFIRM]</bold></green></confirm_click> <dark_gray>(<seconds>s)</dark_gray>"
+  pay-confirm-none: "<prefix><red>Nothing to confirm, or it expired. Send the /pay command again."
+  pay-cooldown: "<prefix><red>Wait <seconds>s before paying again."
+  pay-target-disabled: "<prefix><red><player> is not accepting payments right now."
+  paytoggle-off: "<prefix><gray>Payments from other players are now <red>blocked</red>. <dark_gray>/paytoggle to allow them again"
+  paytoggle-on: "<prefix><gray>Payments from other players are now <green>allowed</green>."
+  usage-withdraw: '<prefix><gray>Usage: <white>/withdraw \<amount></white> <dark_gray>(e.g. 500, 2.5k)</dark_gray>'
+  notes-disabled: "<prefix><red>Banknotes are disabled on this server."
+  note-min: "<prefix><red>The smallest banknote is <min>."
+  note-max: "<prefix><red>The largest banknote is <max>."
+  note-inventory-full: "<prefix><red>Make room in your inventory first."
+  note-withdrawn: "<prefix><gray>You withdrew a banknote worth <gold><amount></gold>. <dark_gray>(balance <balance>)</dark_gray>"
+  note-redeemed: "<prefix><gray>Banknote deposited: <green>+<amount></green> <dark_gray>(balance <balance>)</dark_gray>"
+  note-redeemed-multi: "<prefix><gray>Deposited <yellow><count></yellow> banknotes: <green>+<amount></green> <dark_gray>(balance <balance>)</dark_gray>"
+  note-invalid: "<prefix><red><count> banknote(s) were invalid (copied or already used) and were removed."
+  history-header: "<gold><bold>History</bold></gold> <gray><player> <dark_gray>|</dark_gray> page <page>/<pages>"
+  history-empty: "<prefix><gray>No transactions for <player> yet."
+  history-in: "<dark_gray><time></dark_gray> <green>+<amount></green> <gray><type></gray> <white><other></white> <dark_gray><note></dark_gray>"
+  history-out: "<dark_gray><time></dark_gray> <red>-<amount></red> <gray><type></gray> <white><other></white> <dark_gray><note></dark_gray>"
+  history-set: "<dark_gray><time></dark_gray> <yellow>=<amount></yellow> <gray><type></gray> <white><other></white> <dark_gray><note></dark_gray>"
+  history-next: "<dark_gray>Next page: <next_click><yellow><u><command></u></yellow></next_click>"
+  reloaded: "<prefix><green>Config reloaded."
+  decimals-restart: "<prefix><yellow>currency.decimals changed: restart the server to apply it (balances get converted on startup)."
